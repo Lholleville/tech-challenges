@@ -12,6 +12,8 @@ namespace IWD\JOBINTERVIEW\Entity;
 class Qcm extends Answer
 {
 
+    private $_options;
+
     public function __construct($object = null)
     {
         parent::__construct($object);
@@ -27,18 +29,15 @@ class Qcm extends Answer
         $this->_options = $array;
     }
 
-    public static function answer(){
-        
-    }
-
-    private function getResult()
+    public function getMixedAnswerWithOptions()
     {
+        $tmp = array();
         $i = 0;
-        $tmp_array = [];
-        foreach($this->getOptions() as $option){
-            $tmp_array[] = array($option => ($this->getAnswer()[$i]) ? 1 : 0);
+        foreach($this->getOptions() as $option)
+        {
+            $tmp[$option] = ($this->getAnswer()[$i]) ? 1 : 0;
+            $i++;
         }
-        return array_merge($tmp_array);
-
+        return $tmp;
     }
 }

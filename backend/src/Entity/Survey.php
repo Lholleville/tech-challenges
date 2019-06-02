@@ -9,6 +9,8 @@
 namespace IWD\JOBINTERVIEW\Entity;
 
 
+use IWD\JOBINTERVIEW\Classes\Resolver;
+
 class Survey extends Entity
 {
     private $_name;
@@ -18,6 +20,11 @@ class Survey extends Entity
     private $_numericAnswers = [];
     private $_qcmAnswers = [];
     private $_dateAnswers = [];
+
+    private $_numericResult;
+    private $_qcmResult;
+    private $_dateResult;
+
 
     public function __construct($object = null)
     {
@@ -49,16 +56,18 @@ class Survey extends Entity
 
     public function getDetailedAnswers(){
         self::SepareAnswers();
-        echo '<pre>';
-        $numeric_value = Numeric::answer($this->_numericAnswers);
-        var_dump($numeric_value);
-        $date_value = Date::answer($this->_dateAnswers);
-        var_dump($date_value);
-        $scm_value = Qcm::answer($this->_qcmAnswers);
-        var_dump($scm_value);
-
+        $this->_numericResult = Resolver::answerNumeric($this->_numericAnswers);
+        $this->_dateResult = Resolver::answerDate($this->_dateAnswers);
+        $this->_qcmResult = Resolver::answerQCM($this->_qcmAnswers);
     }
 
+    public function render(){
+        $render["survey"][] = ["name" => $this->getName(), "code" => $this->getCode()];
+        $render["answers"][] = ["type" => $this->_qcmAnswers[0]->getType(), "label" => $this->_qcmAnswers[0]->getLabel(), "answer" => $this->_qcmResult];
+        $render["answers"][] = ["type" => $this->_numericAnswers[0]->getType(), "label" => $this->_numericAnswers[0]->getLabel(), "answer" => $this->_numericResult];
+        $render["answers"][] = ["type" => $this->_dateAnswers[0]->getType(), "label" => $this->_dateAnswers[0]->getLabel(), "answer" => $this->_dateResult];
+        return $render;
+    }
 
     private function SepareAnswers(){
         $answers = self::getAnswers();
@@ -92,8 +101,6 @@ class Survey extends Entity
         $this->_code = $code;
     }
 
-    private function getAverageNumericAnswer(){
 
-    }
 
 }

@@ -15,12 +15,4 @@ class Date extends  Answer
     {
         parent::__construct($object);
     }
-
-    public static function answer($array){
-        $tmp_array = [];
-        foreach($array as $a){
-            $tmp_array[] = $a->getAnswer();
-        }
-        return $tmp_array;
-    }
 }

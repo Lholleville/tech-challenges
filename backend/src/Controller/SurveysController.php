@@ -35,10 +35,10 @@ class SurveysController
         $surveys = new Survey();
 
         foreach($surveys->all() as $survey){
-            $lol = $survey->getDetailedAnswers();
+            $survey->getDetailedAnswers();
+            $json[] = $survey->render();
         }
 
-
-        return 'stage2';
+        return json_encode($json);
     }
 }
