@@ -13,10 +13,9 @@ use IWD\JOBINTERVIEW\Entity\Qcm;
 
 class Resolver
 {
-    public static function answerGCM($array){
-
-    }
-
+    /*
+     * This method returns the average of all numeric answer
+     */
     public static function answerNumeric($array){
         $tmp_array = [];
         foreach($array as $a){
@@ -25,6 +24,9 @@ class Resolver
         return array_sum($tmp_array)/count($tmp_array);
     }
 
+    /*
+     * this method returns a list of all date answer
+     */
     public static function answerDate($array){
         $tmp_array = [];
         foreach($array as $a){
@@ -33,6 +35,9 @@ class Resolver
         return $tmp_array;
     }
 
+    /*
+     * this method returns the additions of all values in GCM answer.
+     */
     public static function answerQCM($array)
     {
         $tmp_array = [];

@@ -29,6 +29,9 @@ class Qcm extends Answer
         $this->_options = $array;
     }
 
+    /*
+     * this method convert boolean into int values
+     * */
     public function getMixedAnswerWithOptions()
     {
         $tmp = array();

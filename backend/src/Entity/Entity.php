@@ -14,11 +14,22 @@ use IWD\JOBINTERVIEW\Manager\ManagerInterface;
 abstract class Entity
 {
 
+    /*
+     * Path to database
+     */
     const DATABASE_DIR = "data";
 
-    private $_data;
+    /**
+     * this variable equals current class name
+     * @var $_class
+     */
     private $_class;
+    /**
+     * this variable contains all json files.
+     * @var $_db
+     */
     protected $_db;
+
 
     public function construct(){
         $this->_class = self::getClassName();
