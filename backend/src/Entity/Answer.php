@@ -11,6 +11,15 @@ namespace IWD\JOBINTERVIEW\Entity;
 
 abstract class Answer
 {
+
+    const TYPE_NUMERIC = "numeric";
+    const TYPE_QCM = "qcm";
+    const TYPE_DATE = "date";
+
+    const LABEL_NUMERIC = "Number of products?";
+    const LABEL_QCM = "What best sellers are available in your store?";
+    const LABEL_DATE = "What is the visit date?";
+
     private $_type;
     private $_label;
     private $_answer;
@@ -19,12 +28,7 @@ abstract class Answer
     {
 
         if($object != null && is_object($object)){
-            if(isset($object->type)){
-                self::setType($object->type);
-            }
-            if(isset($object->label)){
-                self::setLabel($object->label);
-            }
+
             if(isset($object->answer)){
                 self::setAnswer($object->answer);
             }

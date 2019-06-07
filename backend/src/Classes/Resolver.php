@@ -21,7 +21,7 @@ class Resolver
         foreach($array as $a){
             $tmp_array[] = $a->getAnswer();
         }
-        return array_sum($tmp_array)/count($tmp_array);
+        return round(array_sum($tmp_array)/count($tmp_array));
     }
 
     /*

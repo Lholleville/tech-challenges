@@ -14,5 +14,8 @@ class Date extends  Answer
     public function __construct($object = null)
     {
         parent::__construct($object);
+
+        $this->setType(self::TYPE_DATE);
+        $this->setLabel(self::LABEL_DATE);
     }
 }

@@ -20,6 +20,9 @@ class Qcm extends Answer
         if(isset($object->options)){
             self::setOptions($object->options);
         }
+
+        $this->setType(self::TYPE_QCM);
+        $this->setLabel(self::LABEL_QCM);
     }
 
     public function getOptions(){

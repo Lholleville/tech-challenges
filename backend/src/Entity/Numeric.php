@@ -14,6 +14,8 @@ class Numeric extends Answer
     public function __construct($object = null)
     {
         parent::__construct($object);
+        $this->setType(self::TYPE_NUMERIC);
+        $this->setLabel(self::LABEL_NUMERIC);
     }
 
 
