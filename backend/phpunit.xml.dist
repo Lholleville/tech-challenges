@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="Tech Challenges Backend Test Suite">
-            <directory>./tests/</directory>
+            <directory>../../tests/unit/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

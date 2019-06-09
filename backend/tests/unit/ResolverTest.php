@@ -1,4 +1,7 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Created by PhpStorm.
  * User: LoïcHOLLEVILLE
@@ -6,9 +9,8 @@
  * Time: 16:03
  */
 
-class ResolverTest extends \PHPUnit\Framework\TestCase
+class ResolverTest extends TestCase
 {
-
     private $testArrayNumeric;
     private $testArrayDate;
     private $testArrayQcm;
@@ -18,8 +20,7 @@ class ResolverTest extends \PHPUnit\Framework\TestCase
         parent::__construct($name, $data, $dataName);
         $this->setTestArrayDate();
         $this->setTestArrayNumber();
-
-
+        $this->setTestArrayQcm();
     }
 
     /*GETTERS AND SETTERS */
@@ -53,13 +54,20 @@ class ResolverTest extends \PHPUnit\Framework\TestCase
     public function setTestArrayQcm(){
         for($i = 0; $i < 10; $i++){
             $qcm = new \IWD\JOBINTERVIEW\Entity\Qcm();
-            $qcm->setAnswer(date(DateTimeInterface::ISO8601));
+
+            $possible_values = [true, false];
+
+            $array = array(
+                "_options" => ["product 1","product 2","product 3","product 4","product 5","product 6"],
+                "_answer" => [$possible_values[rand(0,1)], $possible_values[rand(0,1)], $possible_values[rand(0,1)], $possible_values[rand(0,1)], $possible_values[rand(0,1)], $possible_values[rand(0,1)]]
+            );
+
+            $qcm->setAnswer($array["_answer"]);
+            $qcm->setOptions($array["_options"]);
+
             $this->testArrayQcm[] = $qcm;
         }
     }
-
-
-
 
     /*TESTS*/
 
@@ -88,6 +96,18 @@ class ResolverTest extends \PHPUnit\Framework\TestCase
     }
 
     public function testQcmAnswerResult(){
-        $this->assertInternalType("array", \IWD\JOBINTERVIEW\Classes\Resolver::answerDate($this->getTestArrayDate()));
+        //check if answer is array
+        $this->assertInternalType("array", \IWD\JOBINTERVIEW\Classes\Resolver::answerQcm($this->getTestArrayQcm()));
+        //test if there are the same number of answers and the same number of options
+        foreach($this->getTestArrayQcm() as $qcmAnswer){
+            $this->assertEquals(count($qcmAnswer->getOptions()), count($qcmAnswer->getAnswer()));
+        }
+        //test if the result array of QCM answer has required keys
+        $result = \IWD\JOBINTERVIEW\Classes\Resolver::answerQCM($this->getTestArrayQcm());
+
+        for($i = 1; $i < 7; $i++){
+            $this->assertArrayHasKey("product ".$i, \IWD\JOBINTERVIEW\Classes\Resolver::answerQCM($this->getTestArrayQcm()));
+            self::assertThat($result["product ".$i] >= 0, self::isTrue());
+        }
     }
 }
